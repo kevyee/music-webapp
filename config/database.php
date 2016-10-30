@@ -6,7 +6,11 @@ $host = $url["host"];
 $username = $url["user"];
 $password = $url["pass"];
 $database = substr($url["path"], 1);
-
+var_dump($host);
+var_dump($username);
+var_dump($password);
+var_dump($database);
+return;
 return [
 
     /*
