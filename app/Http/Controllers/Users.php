@@ -41,13 +41,15 @@ class Users extends Controller
         if (!$this->validator->validate($request->all(), $this->user->login_rules))
             return $this->validator->errors();
         
-        $email = $request->input('email_address');
-        $password = $request->input('password');
-        if (Auth::attempt(['email_address' => $email, 'password' => $password])) {
-            $this->user = $this->user->where('email_address', $email)->first();
+        $credentials = [
+            'email_address' => $request->input('email_address'), 
+            'password' => $request->input('password')
+        ];
+
+        if (Auth::attempt($credentials)) {
             return response()->json([
                 'status' => '200',
-                'data' => $this->user
+                'data' => Auth::user()
             ]);
         }
 

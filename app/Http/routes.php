@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('master');
 });
 
 Route::get('/api/v1/users/{id?}', 'Users@index');
