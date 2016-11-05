@@ -47,17 +47,11 @@ class Users extends Controller
         ];
 
         if (Auth::attempt($credentials)) {
-            return response()->json([
-                'status' => '200',
-                'data' => Auth::user()
-            ]);
+            return response(Auth::user(), 200);
         }
 
         else {
-            return response()->json([
-                'status' => '423',
-                'data' => 'Incorrect email or password.'
-            ]);
+            return response('Incorrect email or password', 403);
         }
         
     }
@@ -65,18 +59,13 @@ class Users extends Controller
 
     public function logout() {
         Auth::logout();
-        if(!Auth::check()) {
-            return response()->json([
-                    'status' => '200',
-                    'data' => 'Logout successful.'
-                ]);
-        }
+        return response('Logout Successful!', 200);
     }
 
 
     public function store(Request $request) {
         if (!$this->validator->validate($request->all()))
-            return $this->validator->errors();
+            return response($this->validator->errors(), 403);
         $this->user->email_address = $request->email_address;
         $this->user->username = $request->input('username');
         $this->user->date_of_birth = $request->input('date_of_birth');

@@ -20,3 +20,5 @@ Route::post('/api/v1/users', 'Users@store');
 Route::post('/api/v1/users/login', 'Users@login');
 Route::post('/api/v1/users/logout', 'Users@logout');
 Route::post('/api/v1/users/{id}', 'Users@update');
+
+Route::get('/api/v1/citys/{id}', 'Citys@get');

@@ -13,7 +13,16 @@ class User extends Authenticatable
     protected $primaryKey = 'user_id';
 
     protected $fillable = [
-       'user_id', 'email_address', 'username', 'date_of_birth', 'password', 'city_id', 'user_status_id', 'forget_password', 'created', 'updated',
+       'user_id', 
+       'email_address', 
+       'username', 
+       'date_of_birth', 
+       'password', 
+       'city_id', 
+       'user_status_id', 
+       'forget_password', 
+       'created', 
+       'updated',
     ];
 
     public $rules = [

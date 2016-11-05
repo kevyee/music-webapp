@@ -29,6 +29,6 @@ class KValidator extends Model
 
     public function errors()
     {
-        return \KHelper::json_helper('422', null , $this->errors);
+        return $this->errors;
     }
 }
