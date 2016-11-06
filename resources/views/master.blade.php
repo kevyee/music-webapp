@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="{{ secure_asset('css/css_r/font.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ secure_asset('css/css_r/app.css') }}" type="text/css" />
 
-    <script>var baseUrl = "{{ url('/') }}";</script> 
+    <script>var baseUrl = "{{ secure_url('/') }}";</script> 
 </head>
 <body>
     <!-- <div> -->
