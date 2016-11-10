@@ -31,4 +31,10 @@ class KValidator extends Model
     {
         return $this->errors;
     }
+
+    public function addError($error){
+        if($this->errors == null)
+            $this->errors = [];
+        array_push($this->errors, $error);
+    }
 }

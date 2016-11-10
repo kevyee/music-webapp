@@ -1,5 +1,5 @@
 
-var rhythmiq = angular.module('myApp', ['ngRoute', 'ngCookies', 'ngSanitize']);
+var rhythmiq = angular.module('myApp', ['ngRoute', 'ngCookies', 'ngSanitize', 'ngFileUpload', 'angularSoundManager']);
 
 rhythmiq.config(['$routeProvider', '$locationProvider',
     function($routeProvider,$locationProvider) {
@@ -26,14 +26,35 @@ rhythmiq.config(['$routeProvider', '$locationProvider',
             controller: 'userController',
             authenticated: false
         });
+
+        $routeProvider.when('/upload', {
+            templateUrl: 'templates/users/upload.html',
+            controller: 'songController',
+            authenticated: true
+        });
         
-        $routeProvider.otherwise('/');
+        $routeProvider.when('/profile', {
+            templateUrl: 'templates/users/profile.html',
+            controller: 'userController',
+            authenticated: true
+        });
+
+        $routeProvider.otherwise('/home');
 
     }
 ]);
 
+
 rhythmiq.run(['$rootScope', '$location', 'userModel',
     function($rootScope, $location, userModel) {
+
+         $rootScope.doLogout = function() {
+                userModel.doUserLogout().then(function(){
+                    $location.path('/');
+                }).catch(function(response) {
+                });
+        };
+
         $rootScope.$on('$routeChangeStart',
             function(event, next, current){
                 if(next.$$route.authenticated) {
@@ -51,7 +72,16 @@ rhythmiq.run(['$rootScope', '$location', 'userModel',
                 }
                 else {
                 }
+
+                if($location.$$path != '/' && $location.$$path != '/register') {
+                    $('#footer_x').css('display','block');
+                }
+                else {
+                    $('#footer_x').css('display','none');
+                }
+
         });
+
     }
 ]);
 //# sourceMappingURL=app.js.map

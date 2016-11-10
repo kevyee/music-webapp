@@ -12,6 +12,7 @@ rhythmiq.factory('userModel', ['$http', '$cookies', function($http, $cookies){
                 password: user.password
             }
         }).success(function(response) {
+            console.log(response);
             $cookies.put('auth', JSON.stringify(response));
         }).error(function(data, status, headers) {
             
@@ -66,7 +67,6 @@ rhythmiq.factory('userModel', ['$http', '$cookies', function($http, $cookies){
         });
     };
 
-
     userModel.getCityList = function() {
         return $http({
             headers: {
@@ -77,7 +77,21 @@ rhythmiq.factory('userModel', ['$http', '$cookies', function($http, $cookies){
         }).success(function(response) {
             return response;
         }).error(function(data, status, headers) {
-            
+            alert(data);
+        });
+    };
+
+    userModel.getGenreList = function() {
+        return $http({
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            url: baseUrl + '/api/v1/genres/all',
+            method: "GET"
+        }).success(function(response) {
+            return response;
+        }).error(function(data, status, headers) {
+            alert(data);
         });
     };
 

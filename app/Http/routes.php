@@ -20,5 +20,11 @@ Route::post('/api/v1/users', 'Users@store');
 Route::post('/api/v1/users/login', 'Users@login');
 Route::post('/api/v1/users/logout', 'Users@logout');
 Route::post('/api/v1/users/{id}', 'Users@update');
+Route::get('/api/v1/users/createUserDirectory', 'Users@createUserDirectory');
 
 Route::get('/api/v1/citys/{id}', 'Citys@get');
+Route::get('/api/v1/genres/{id}', 'Genres@get');
+
+Route::post('/api/v1/songs', 'Songs@store');
+Route::get('/api/v1/songs/getUserSongs', 'Songs@getUserSongs');
+

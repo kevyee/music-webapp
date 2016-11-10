@@ -1,37 +1,54 @@
-rhythmiq.controller('userController', ['$scope', '$sce', '$location', 'userModel', function($scope, $sce, $location, userModel){ 
-    $scope.songs = [
-            {
-                id: 'one',
-                title: 'Rain',
-                artist: 'Drake',
-                url: 'http://www.schillmania.com/projects/soundmanager2/demo/_mp3/rain.mp3'
-            },
-            {
-                id: 'two',
-                title: 'Walking',
-                artist: 'Nicki Minaj',
-                url: 'http://www.schillmania.com/projects/soundmanager2/demo/_mp3/walking.mp3'
-            },
-            {
-                id: 'three',
-                title: 'Barrlping with Carl (featureblend.com)',
-                artist: 'Akon',
-                url: 'http://www.freshly-ground.com/misc/music/carl-3-barlp.mp3'
-            },
-            {
-                id: 'four',
-                title: 'Angry cow sound?',
-                artist: 'A Cow',
-                url: 'http://www.freshly-ground.com/data/audio/binaural/Mak.mp3'
-            },
-            {
-                id: 'five',
-                title: 'Things that open, close and roll',
-                artist: 'Someone',
-                url: 'http://www.freshly-ground.com/data/audio/binaural/Things%20that%20open,%20close%20and%20roll.mp3'
-            }
-    ];
+rhythmiq.controller('userController', ['$scope', '$sce', '$location', 'userModel', 'songModel', function($scope, $sce, $location, userModel, songModel){ 
 
+    // console.log($scope.loggedin_username);
+
+    if(userModel.getAuthStatus()) {
+        $scope.username  = userModel.getUserObject()['username'];
+    }
+    
+    // $scope.songs = [
+            // {
+            //     id: 'one',
+            //     title: 'Rain',
+            //     artist: 'Drake',
+            //     url: 'http://www.schillmania.com/projects/soundmanager2/demo/_mp3/rain.mp3'
+            // },
+            // {
+            //     id: 'two',
+            //     title: 'Walking',
+            //     artist: 'Nicki Minaj',
+            //     url: 'http://www.schillmania.com/projects/soundmanager2/demo/_mp3/walking.mp3'
+            // },
+            // {
+            //     id: 'three',
+            //     title: 'Barrlping with Carl (featureblend.com)',
+            //     artist: 'Akon',
+            //     url: 'http://www.freshly-ground.com/misc/music/carl-3-barlp.mp3'
+            // },
+            // {
+            //     id: 'four',
+            //     title: 'Angry cow sound?',
+            //     artist: 'A Cow',
+            //     url: 'http://www.freshly-ground.com/data/audio/binaural/Mak.mp3'
+            // },
+            // {
+            //     id: 'five',
+            //     title: 'Things that open, close and roll',
+            //     artist: 'Someone',
+            //     url: 'http://www.freshly-ground.com/data/audio/binaural/Things%20that%20open,%20close%20and%20roll.mp3'
+            // }
+    // ];
+    
+    
+    if($location.$$path == '/profile'){
+        songModel.getUserSongs().then(function(response){
+            $scope.userSongs = response.data;
+            console.log($scope.userSongs);
+        }).catch(function(response) {
+        });
+    }
+
+    //populate cities select
     if($location.$$path == '/register') {
         userModel.getCityList().then(function(response){
             $scope.data = {
@@ -53,9 +70,9 @@ rhythmiq.controller('userController', ['$scope', '$sce', '$location', 'userModel
             username: 'kevin.yee',
             password: 'Jesuszone#123',
             confirm_password: 'Jesuszone#123',
-        }
-    });
+        },
 
+    });
 
     angular.extend($scope, {
         doLogin: function(loginForm) {
@@ -69,12 +86,6 @@ rhythmiq.controller('userController', ['$scope', '$sce', '$location', 'userModel
                 alert('Incorrect email or password!');
             });
         },
-        doLogout: function() {
-            userModel.doUserLogout().then(function(){
-                $location.path('/');
-            }).catch(function(response) {
-            });
-        },
 
         doRegister: function(registerForm) {
             var user = {
@@ -85,8 +96,8 @@ rhythmiq.controller('userController', ['$scope', '$sce', '$location', 'userModel
                 date_of_birth: $scope.register.date_of_birth,
                 city_id: $scope.selectedCity.city_id,
             };
-            userModel.doRegister(user).then(function(){
 
+            userModel.doRegister(user).then(function(){
                 var user = {
                     email_address: $scope.register.email_address,
                     password: $scope.register.password
@@ -105,7 +116,68 @@ rhythmiq.controller('userController', ['$scope', '$sce', '$location', 'userModel
                 $scope.register.error = error;
                 $scope.showerror = true;
             });
-        }
+        },
+
+        playSong: function(userSong) {
+            console.log(myPlaylist);
+            myPlaylist.add({
+              title:userSong.song_title,
+              artist:userModel.getUserObject()['username'],
+              // mp3:"http://www.jplayer.org/audio/mp3/Miaow-01-Tempered-song.mp3",
+                mp3:assetUrl + '/users/' + userModel.getUserObject()['email_address'] + '/' + userSong.song_file_name,
+                // mp3: 'http://www.schillmania.com/projects/soundmanager2/demo/_mp3/rain.mp3'
+            });
+            myPlaylist.pause();
+        },
+
+
     });
+}]);
+rhythmiq.controller('songController', ['$scope', '$sce', '$location', 'Upload', 'songModel', 'userModel', function($scope, $sce, $location, Upload, songModel, userModel){ 
+
+    if(userModel.getAuthStatus()) {
+        $scope.username  = userModel.getUserObject()['username'];
+    }
+
+    //populate genres
+    if($location.$$path == '/upload') {
+        songModel.getGenreList().then(function(response){
+            $scope.data = {
+                genres: response.data,
+            };
+            $scope.selectedGenre = $scope.data.genres[0];
+        }).catch(function(response) {
+        });
+    }
+
+    angular.extend($scope, {
+    doSongUpload: function(uploadForm) {
+            Upload.upload({
+                url: baseUrl + '/api/v1/songs',
+                method: 'POST',
+                file: $scope.song_file,
+                data: {
+                    'song_title': $scope.upload_song_title,
+                    'gnre_id': $scope.selectedGenre.gnre_id,
+                }
+            }).then(function(response){
+                $scope.song_file = null;                
+                $scope.upload_song_title = null;             
+                $scope.upload_success = 'Song has been successfully uploaded! Go to your profile to listen.'
+                $scope.showsuccess = true;
+                $scope.showerror = false;
+            }).catch(function(response) {
+                console.log(response.data)
+                var error = '';
+                angular.forEach(response.data, function(value, key) {
+                   error = error + value + '<br>';
+                });
+                $scope.upload_error = error;
+                $scope.showerror = true;
+            });
+        },
+
+    });
+
 }]);
 //# sourceMappingURL=controllers.js.map

@@ -11,21 +11,20 @@ class Song extends Model
     protected $primaryKey = 'song_id';
 
     protected $fillable = [
-        'song_id', 
-        'gnre_id', 
-        'song_file_name', 
-        'song_file_image', 
-        'total_stream_count', 
-        'user_id', 
-        'song_status_id',  
-        'created', 
+        'song_id',
+        'song_title',
+        'gnre_id',
+        'song_file_name',
+        'total_stream_count',
+        'user_id',
+        'song_status_id',
+        'created',
         'updated',
     ];
 
     public $rules = [
+        'song_title' => 'required|regex:/(^[A-Za-z0-9 ]+$)+/|max:30',
         'gnre_id' => 'required', 
-        'song_file_name' => 'required', 
-        'song_file_image' => 'required',
-        'gnre_id' => 'required',
+        // 'song_file_image' => 'required|max:5000',
     ];
 }

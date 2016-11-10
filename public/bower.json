@@ -23,6 +23,7 @@
     "angular-route": "^1.5.8",
     "bootstrap": "^3.3.7",
     "restangular": "^1.5.2",
-    "angular-cookies": "^1.5.8"
+    "angular-cookies": "^1.5.8",
+    "ng-file-upload-shim": "^12.2.13"
   }
 }

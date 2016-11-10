@@ -633,6 +633,7 @@ body.container {
     table-layout: fixed;
     border-spacing: 0;
     width: 100%;
+    min-height: 800px;
   }
   .hbox > aside,
   .hbox > section {

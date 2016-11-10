@@ -8,6 +8,7 @@ use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 use App\KValidator;
 
 class Users extends Controller
@@ -66,6 +67,7 @@ class Users extends Controller
     public function store(Request $request) {
         if (!$this->validator->validate($request->all()))
             return response($this->validator->errors(), 403);
+
         $this->user->email_address = $request->email_address;
         $this->user->username = $request->input('username');
         $this->user->date_of_birth = $request->input('date_of_birth');
@@ -76,8 +78,9 @@ class Users extends Controller
         $this->user->city_id = $request->input('city_id');
         $this->user->user_status_id = 'verified'; //temporary. add email check if time is with us
         $this->user->save();
-
-        return \KHelper::json_helper('200', 'Registration was successful!', null);
+        $path = public_path().'//users/' . $this->user->email_address;
+        File::makeDirectory($path, $mode = 0777, true, true);
+        return response('Registration was successful!', 200);
     }
 
 
@@ -94,9 +97,7 @@ class Users extends Controller
         return \KHelper::json_helper('200', 'Update successful!', null);
     }
 
-
     public function get($key) {
         return $this->user->find($key);
     }
-
 }

@@ -27,7 +27,7 @@ class User extends Authenticatable
 
     public $rules = [
             'email_address' => 'required|email|unique:user,email_address',
-            'username' => 'required|min:6|unique:user,username',
+            'username' => 'required|min:6|unique:user,username|alpha_dash',
             'password' => 'min:8|required',
             'confirm_password' => 'required|same:password',
             'date_of_birth' => 'required|date',
