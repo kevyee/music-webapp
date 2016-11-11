@@ -27,17 +27,17 @@ rhythmiq.controller('userController', ['$scope', '$sce', '$location', 'userModel
     }
 
     angular.extend($scope, {
-        login: {
-            email_address: 'kkevinyee13@gmail.com',
-            password: 'Jesuszone#123'
-        },
+        // login: {
+        //     email_address: 'kkevinyee13@gmail.com',
+        //     password: 'Jesuszone#123'
+        // },
 
-        register: {
-            email_address: 'kevin.yee19@gmail.com',
-            username: 'kevin.yee',
-            password: 'Jesuszone#123',
-            confirm_password: 'Jesuszone#123',
-        },
+        // register: {
+        //     email_address: 'kevin.yee19@gmail.com',
+        //     username: 'kevin.yee',
+        //     password: 'Jesuszone#123',
+        //     confirm_password: 'Jesuszone#123',
+        // },
 
     });
 
