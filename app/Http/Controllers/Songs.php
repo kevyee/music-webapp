@@ -23,8 +23,16 @@ class Songs extends Controller
     }
 
     public function getUserSongs() {
-        if(Auth::check())
-            return response(Song::where('user_id', Auth::user()->user_id)->get(), 200);
+        if(Auth::check()) {
+            $songs = \DB::table('song')
+                        ->select('song_id','gnre_name', 'song_title AS title','song_file_name')
+                        ->join('genre', 'song.gnre_id', '=', 'genre.gnre_id')
+                        ->join('user', 'song.user_id', '=', 'user.user_id')
+                        ->where('song.user_id', Auth::user()->user_id)
+                        ->get();
+            return response($songs, 200);
+            // return response(Song::where('user_id', Auth::user()->user_id)->get(), 200);
+        }
         else{
             return response('Access Denied', 403);
         }
@@ -63,7 +71,7 @@ class Songs extends Controller
         
         $this->song->song_title = $request->input('song_title');
         $this->song->gnre_id = $request->input('gnre_id');
-        $this->song->song_file_name =  $unique_id . "/" . $songFileName;
+        $this->song->song_file_name =  $path . "/" . $songFileName;
         $this->song->total_stream_count = 0;
         $this->song->user_id = Auth::user()->user_id;
         $this->song->song_status_id  = 1; //change for admin review
