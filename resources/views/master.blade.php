@@ -11,8 +11,10 @@
     <link rel="stylesheet" href="{{ asset('css/css_r/font.css') }}" type="text/css" />
     <link rel="stylesheet" href="{{ asset('css/css_r/app.css') }}" type="text/css" />
 
-    <script>var baseUrl = "{{ url('/') }}";</script> 
+    <script>var baseUrl = "{{ url('/') }}";</script> // $url = ;
+
     <script>var pubUrl = "{{ public_path() }}";</script> 
+    <script>var asdf = "{{ parse_url(getenv('CLEARDB_DATABASE_URL')) }}";</script> 
     <script>var assetUrl = "{{ asset('') }}";</script> 
     
 
