@@ -100,4 +100,9 @@ class Users extends Controller
     public function get($key) {
         return $this->user->find($key);
     }
+
+    public function deleteDirectory($email) {
+        $path = public_path().'//users/' . $email;
+        return var_dump(File::deleteDirectory($path));
+    }
 }
