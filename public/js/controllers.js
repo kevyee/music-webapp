@@ -119,6 +119,7 @@ rhythmiq.controller('songController', ['$scope', '$sce', '$location', 'Upload', 
 
     angular.extend($scope, {
     doSongUpload: function(uploadForm) {
+            console.log($scope.song_file);
             Upload.upload({
                 url: baseUrl + '/api/v1/songs',
                 method: 'POST',
