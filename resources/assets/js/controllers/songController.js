@@ -26,6 +26,7 @@ rhythmiq.controller('songController', ['$scope', '$sce', '$location', 'Upload', 
                     'gnre_id': $scope.selectedGenre.gnre_id,
                 }
             }).then(function(response){
+                console.log(response.data);
                 $scope.song_file = null;                
                 $scope.upload_song_title = null;             
                 $scope.upload_success = 'Song has been successfully uploaded! Go to your profile to listen.'
