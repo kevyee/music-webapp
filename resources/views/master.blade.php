@@ -14,7 +14,7 @@
     <script>var baseUrl = "{{ url('/') }}";</script> // $url = ;
 
     <script>var pubUrl = "{{ public_path() }}";</script> 
-    <script>var asdf = "{{ parse_url(getenv('CLEARDB_DATABASE_URL')) }}";</script> 
+    <script>var asdf = "{{ var_dump(parse_url(getenv('CLEARDB_DATABASE_URL'))) }}";</script> 
     <script>var assetUrl = "{{ asset('') }}";</script> 
     
 
