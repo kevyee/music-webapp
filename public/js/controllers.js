@@ -96,14 +96,14 @@ rhythmiq.controller('userController', ['$scope', '$sce', '$location', 'userModel
         },
 
         playSong: function(userSong) {
-            myPlaylist.pause();
-            myPlaylist.remove();
+            // myPlaylist.pause();
+            // myPlaylist.remove();
             var index = -1;
             for(var i in $scope.userSongs) {
 
                 var item = $scope.userSongs[i];   
                 if(userSong.song_title == item.song_title) {
-                    index = i
+                    index = i;
                 }
                 myPlaylist.add({ 
                     title : item.song_title,
@@ -111,9 +111,10 @@ rhythmiq.controller('userController', ['$scope', '$sce', '$location', 'userModel
                     mp3 : "https://s3-ap-southeast-2.amazonaws.com/rhythmiq/" + item.song_file_name
                 });
             }
-            console.log(myPlaylist.playlist);
+            console.log(myPlaylist);
             console.log('song index is ' + index);
-            myPlaylist.play(index);
+            myPlaylist.play(parseInt(index));
+            
         },
 
         deleteSong: function(userSong) {

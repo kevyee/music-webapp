@@ -10,9 +10,6 @@ $(document).ready(function(){
 
   $(document).on($.jPlayer.event.play, myPlaylist.cssSelector.jPlayer,  function(){
     $('.musicbar').addClass('animate');
-    // if(myPlaylist.status.currentTime>0) {
-      // alert('hello');
-    // }
   });
 
   $(document).on('click', '.jp-play-me', function(e){
@@ -26,7 +23,7 @@ $(document).ready(function(){
     $this.toggleClass('active');
     $this.parent('li').toggleClass('active');
     if( !$this.hasClass('active') ){
-      myPlaylist.pause();
+      // myPlaylist.pause();
     }else{
       var i = Math.floor(Math.random() * (1 + 7 - 1));
       // myPlaylist.play(i);
