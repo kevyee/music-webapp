@@ -77,7 +77,8 @@ class Songs extends Controller
                 'secret' => 'dlBsK3TeUJe649rVYOUI2ZNdy1B7wkzH1MNFmwPS',
             ],
         ]);
-        
+        ini_set('post_max_size', '5M'); 
+        ini_set('upload_max_filesize', '5M')
         $s3->upload('rhythmiq', $songFileName, fopen($song_file->getRealPath(), 'rb'), 'public-read');
         
         return response('Upload Complete!', 200);
