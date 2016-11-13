@@ -59,13 +59,12 @@ class Songs extends Controller
             return response($this->validator->errors(), 403);
         }        
 
-        // if($songFileType != 'mp3') {
-        //     $this->validator->addError('Song file type must be mp3.');
-        //     return response($this->validator->errors(), 403);
-        // }
+        if($songFileType != 'mp3') {
+            $this->validator->addError('Song file type must be mp3.');
+            return response($this->validator->errors(), 403);
+        }
 
         $songFileName = $song_file->getClientOriginalName();
-        $songFileName = time() . '.' . $song_file->getClientOriginalExtension();
 
         // $s3 = Storage::disk('s3');
         // $s3->put($songFileName, file_get_contents($song_file), 'public');
@@ -91,7 +90,7 @@ class Songs extends Controller
         $saved = $this->song->save();
 
         if($saved) {
-            $s3->upload('rhythmiq', $songFileName, fopen($song_file->getRealPath(), 'rb'), 'public-read');
+            // $s3->upload('rhythmiq', $songFileName, fopen($song_file->getRealPath(), 'rb'), 'public-read');
             return response('Upload Complete!', 200);
        
         } else {
