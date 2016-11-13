@@ -47,11 +47,10 @@ class Songs extends Controller
             return response($this->validator->errors(), 403);
         }
         
-
         $song_file = Input::file('file');
         $file_limit = 5000;
         $songFileType = $song_file->getClientOriginalExtension();
-        return response($songFileType, 200);
+        // return response($songFileType, 200);
 
         if (File::size($song_file) / 1000 > $file_limit) {
             $this->validator->addError('File size must not exceed 5MB.');
@@ -63,26 +62,25 @@ class Songs extends Controller
             return response($this->validator->errors(), 403);
         }
 
+        $songFileName = $song_file->getClientOriginalName();
+        $songFileName = time() . '.' . $song_file->getClientOriginalExtension();
+
         if (!$this->validator->validate($request->all()))
             return response($this->validator->errors(), 403);
-        
-        $songFileName = $song_file->getClientOriginalName();
-
-        $unique_id = uniqid();
-        $path = public_path().'//users/' . Auth::user()->email_address . "/" . $unique_id;
-        
-
-        
         $this->song->song_title = $request->input('song_title');
         $this->song->gnre_id = $request->input('gnre_id');
-        $this->song->song_file_name =  $path . "/" . $songFileName;
+        $this->song->song_file_name = $songFileName;
         $this->song->total_stream_count = 0;
         $this->song->user_id = Auth::user()->user_id;
         $this->song->song_status_id  = 1; //change for admin review
         $this->song->created = date('Y-m-d h:i:s');
         $this->song->updated = date('Y-m-d h:i:s');
-        $this->song->save();
+        $saved = $this->song->save();
 
+        if($saved) {
+            $s3 = Storage::disk('s3');
+            $s3->put($songFileName, file_get_contents($song_file), 'public');
+        }
         return response('Upload Complete!', 200);
     }
 }
