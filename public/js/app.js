@@ -50,6 +50,8 @@ rhythmiq.run(['$rootScope', '$location', 'userModel',
 
          $rootScope.doLogout = function() {
                 userModel.doUserLogout().then(function(){
+                    myPlaylist.pause();
+                    myPlaylist.remove();
                     $location.path('/');
                 }).catch(function(response) {
                 });

@@ -30,7 +30,28 @@ class Songs extends Controller
                         ->select('song_id','gnre_name', 'song_title','song_file_name', 'username', 'song.created', 'song.updated')
                         ->join('genre', 'song.gnre_id', '=', 'genre.gnre_id')
                         ->join('user', 'song.user_id', '=', 'user.user_id')
-                        ->where('song.user_id', Auth::user()->user_id)
+                        ->where([
+                            ['song.user_id', '=', Auth::user()->user_id],
+                            ['song.song_status_id', '=', 1]]
+                        )
+                        ->get();
+            return response($songs, 200);
+            // return response(Song::where('user_id', Auth::user()->user_id)->get(), 200);
+        }
+        else{
+            return response('Access Denied', 403);
+        }
+    }
+
+    public function getNewSongs() {
+        if(Auth::check()) {
+            $songs = \DB::table('song')
+                        ->select('song_id','gnre_name', 'song_title','song_file_name', 'username', 'song.created', 'song.updated')
+                        ->join('genre', 'song.gnre_id', '=', 'genre.gnre_id')
+                        ->join('user', 'song.user_id', '=', 'user.user_id')
+                        ->where([
+                            ['song.song_status_id', '=', 1]]
+                        )
                         ->get();
             return response($songs, 200);
             // return response(Song::where('user_id', Auth::user()->user_id)->get(), 200);
@@ -97,6 +118,19 @@ class Songs extends Controller
             if($saved) {
                 return response('Please upload again.', 403);
             }
+        }
+    }
+
+    public function softDelete($song_id) {
+        if(Auth::check()) {
+            $this->song = Song::find($song_id);
+            if($this->song->user_id == Auth::user()->user_id) {
+                $this->song->song_status_id = 3; // soft delete
+                $this->song->save();
+            }
+        }
+        else{
+            return response('Access Denied', 403);
         }
     }
 }

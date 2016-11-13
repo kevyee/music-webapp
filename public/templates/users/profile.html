@@ -111,9 +111,12 @@
                         </header>
                   <ul>
                       <li class="list-group-item clearfix" style = "margin-bottom:5px;height:60px" ng-repeat="userSong in userSongs">
-                        <a class="jp-play-me pull-right m-t-sm m-l text-md" ng-click="playSong(userSongs, userSong)" style="cursor:pointer">
+                        <a class="jp-play-me pull-right m-t-sm m-l text-md" ng-click="playSong(userSong)" style="cursor:pointer">
                           <i class="icon-control-play text"></i>
                           <i class="icon-control-pause text-active"></i>
+                        </a>
+                        <a class="pull-right m-t-sm m-l text-md" ng-click="deleteSong(userSong)" style="cursor:pointer">
+                          <i class="icon-close"></i>
                         </a>
                         <div class="pull-left thumb-sm m-r">
                           <img src="images/default_album_cover.png" alt="...">
@@ -124,6 +127,9 @@
                           <div class="text-muted">by {{userSong.username}}</div> 
                         </div>
 
+                      </li>
+                      <li class="animate-repeat" ng-if="userSongs.length === 0" style="list-style:none;">
+                        <h2 class="font-thin m-b">No Uploaded Tracks. Go to the upload to share your songs.</h2>
                       </li>
                     </ul>
                 </section>

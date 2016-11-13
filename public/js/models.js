@@ -133,6 +133,32 @@ rhythmiq.factory('songModel', ['$http', '$cookies', function($http, $cookies){
         });
     };
 
+    songModel.deleteSong = function(song_id) {
+        return $http({
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            url: baseUrl + '/api/v1/songs/softDelete/' + song_id,
+            method: "GET"
+        }).success(function(response) {
+            
+        }).error(function(data, status, headers) {
+        });
+    };
+
+    songModel.getNewSongs = function() {
+        return $http({
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            url: baseUrl + '/api/v1/songs/getNewSongs',
+            method: "GET"
+        }).success(function(response) {
+            
+        }).error(function(data, status, headers) {
+        });
+    };
+
     songModel.getGenreList = function() {
         return $http({
             headers: {

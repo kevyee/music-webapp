@@ -26,7 +26,7 @@ $(document).ready(function(){
       myPlaylist.pause();
     }else{
       var i = Math.floor(Math.random() * (1 + 7 - 1));
-      myPlaylist.play(i);
+      // myPlaylist.play(i);
     }
     
   });

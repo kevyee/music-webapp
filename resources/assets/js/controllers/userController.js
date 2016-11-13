@@ -9,6 +9,16 @@ rhythmiq.controller('userController', ['$scope', '$sce', '$location', 'userModel
     
     if($location.$$path == '/profile'){
         songModel.getUserSongs().then(function(response){
+            $scope.userSongs = null;
+            $scope.userSongs = response.data;
+            console.log($scope.userSongs);
+        }).catch(function(response) {
+        });
+    }
+
+    if($location.$$path == '/home'){
+        songModel.getNewSongs().then(function(response){
+            $scope.userSongs = null;
             $scope.userSongs = response.data;
             console.log($scope.userSongs);
         }).catch(function(response) {
@@ -85,20 +95,39 @@ rhythmiq.controller('userController', ['$scope', '$sce', '$location', 'userModel
             });
         },
 
-        playSong: function(userSongs, userSong) {
-            var songs = [];
-            for(var i in userSongs) {    
-                var item = userSongs[i];   
-                songs.push({ 
+        playSong: function(userSong) {
+            myPlaylist.pause();
+            myPlaylist.remove();
+            var index = -1;
+            for(var i in $scope.userSongs) {
+
+                var item = $scope.userSongs[i];   
+                if(userSong.song_title == item.song_title) {
+                    index = i
+                }
+                myPlaylist.add({ 
                     title : item.song_title,
                     artist  : item.username,
-                    mp3 : "https://s3-ap-southeast-2.amazonaws.com/rhythmiq/" + userSong.song_file_name
+                    mp3 : "https://s3-ap-southeast-2.amazonaws.com/rhythmiq/" + item.song_file_name
                 });
             }
-            console.log(songs);
-            myPlaylist.add(songs);
-            myPlaylist.play();
+            console.log(myPlaylist.playlist);
+            console.log('song index is ' + index);
+            myPlaylist.play(index);
         },
+
+        deleteSong: function(userSong) {
+            var r = confirm("Are you sure you want to remove this song?");
+            if (r == true) {
+            songModel.deleteSong(userSong['song_id']).then(function(){
+                var index = $scope.userSongs.indexOf(userSong);
+                $scope.userSongs.splice(index, 1);  
+            }).catch(function(response) {
+                console.log(response.data);
+            });
+            } 
+        },
+
 
 
     });

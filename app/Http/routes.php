@@ -29,9 +29,5 @@ Route::get('/api/v1/genres/{id}', 'Genres@get');
 
 Route::post('/api/v1/songs', 'Songs@store');
 Route::get('/api/v1/songs/getUserSongs', 'Songs@getUserSongs');
-
-Route::get('test', function() {
-    echo '123';
-    $s3 = Storage::disk('s3');
-    $s3->put('myfile.txt', 'This is Kevin', 'public');
-});
+Route::get('/api/v1/songs/softDelete/{id}', 'Songs@softDelete');
+Route::get('/api/v1/songs/getNewSongs', 'Songs@getNewSongs');

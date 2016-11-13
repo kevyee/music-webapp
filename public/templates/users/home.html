@@ -109,60 +109,26 @@
                               <span class="bar5 a5 bg-danger dker"></span>
                           </span></h2>
                         </header>
-                  <div>
-                      <div class="list-group-item clearfix" style = "margin-bottom:5px;height:70px">
-                        <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
+                  <ul>
+                      <li class="list-group-item clearfix" style = "margin-bottom:5px;height:60px" ng-repeat="userSong in userSongs">
+                        <a class="jp-play-me pull-right m-t-sm m-l text-md" ng-click="playSong(userSong)" style="cursor:pointer">
                           <i class="icon-control-play text"></i>
                           <i class="icon-control-pause text-active"></i>
                         </a>
-                        <a href="#" class="pull-left thumb-sm m-r">
-                          <img src="images/m0.jpg" alt="...">
-                        </a>
-                        <a class="clear" href="#">
-                          <span class="block text-ellipsis">Little Town</span>
-                          <small class="text-muted">by Soph Ashe</small>
-                        </a>
-                      </div>
-                      <div class="list-group-item clearfix" style = "margin-bottom:5px;height:70px">
-                        <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
-                          <i class="icon-control-play text"></i>
-                          <i class="icon-control-pause text-active"></i>
-                        </a>
-                        <a href="#" class="pull-left thumb-sm m-r">
-                          <img src="images/a1.png" alt="...">
-                        </a>
-                        <a class="clear" href="#">
-                          <span class="block text-ellipsis">Get lacinia odio sem nec elit</span>
-                          <small class="text-muted">by Filex</small>
-                        </a>
-                      </div>
-                      <div class="list-group-item clearfix" style = "margin-bottom:5px;height:70px">
-                        <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
-                          <i class="icon-control-play text"></i>
-                          <i class="icon-control-pause text-active"></i>
-                        </a>
-                        <a href="#" class="pull-left thumb-sm m-r">
-                          <img src="images/a2.png" alt="...">
-                        </a>
-                        <a class="clear" href="#">
-                          <span class="block text-ellipsis">Donec sed odio du</span>
-                          <small class="text-muted">by Dan Doorack</small>
-                        </a>
-                      </div>
-                      <div class="list-group-item clearfix" style = "margin-bottom:5px;height:70px">
-                        <a href="#" class="jp-play-me pull-right m-t-sm m-l text-md">
-                          <i class="icon-control-play text"></i>
-                          <i class="icon-control-pause text-active"></i>
-                        </a>
-                        <a href="#" class="pull-left thumb-sm m-r">
-                          <img src="images/a3.png" alt="...">
-                        </a>
-                        <a class="clear" href="#">
-                          <span class="block text-ellipsis">Curabitur blandit tempu</span>
-                          <small class="text-muted">by Foxes</small>
-                        </a>
-                      </div>
-                    </div>
+                        <div class="pull-left thumb-sm m-r">
+                          <img src="images/default_album_cover.png" alt="...">
+                        </div>
+                        <div class="clear" href="#">
+                          
+                          <span class="block text-ellipsis" style="text-transform:uppercase"> {{userSong.song_title}} </span>
+                          <div class="text-muted">by {{userSong.username}}</div> 
+                        </div>
+
+                      </li>
+                      <li class="animate-repeat" ng-if="userSongs.length === 0" style="list-style:none;">
+                        <h2 class="font-thin m-b">No Uploaded Tracks. Go to the upload to share your songs.</h2>
+                      </li>
+                    </ul>
                 </section>
                 
               </section>
