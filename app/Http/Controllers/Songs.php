@@ -48,6 +48,8 @@ class Songs extends Controller
         }
         
         $song_file = Input::file('file');
+        return response($song_file, 200);
+
         $file_limit = 5000;
         $songFileType = $song_file->getClientOriginalExtension();
         // return response($songFileType, 200);
@@ -79,7 +81,7 @@ class Songs extends Controller
 
         if($saved) {
             $s3 = Storage::disk('s3');
-            $s3->put($songFileName, file_get_contents($song_file->getRealPath()), 'public');
+            $s3->put($songFileName, file_get_contents($song_file), 'public');
         }
         return response('Upload Complete!', 200);
     }
