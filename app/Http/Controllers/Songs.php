@@ -59,10 +59,10 @@ class Songs extends Controller
             return response($this->validator->errors(), 403);
         }        
 
-        if($songFileType != 'mp3') {
-            $this->validator->addError('Song file type must be mp3.');
-            return response($this->validator->errors(), 403);
-        }
+        // if($songFileType != 'mp3') {
+        //     $this->validator->addError('Song file type must be mp3.');
+        //     return response($this->validator->errors(), 403);
+        // }
 
         $songFileName = $song_file->getClientOriginalName();
         $songFileName = time() . '.' . $song_file->getClientOriginalExtension();
