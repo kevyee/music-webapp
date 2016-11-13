@@ -67,6 +67,10 @@ class Songs extends Controller
         $songFileName = $song_file->getClientOriginalName();
         $songFileName = time() . '.' . $song_file->getClientOriginalExtension();
 
+        $s3 = Storage::disk('s3');
+        $s3->put($songFileName, file_get_contents($song_file), 'public');
+        return response('Upload Complete!', 200);
+        
         if (!$this->validator->validate($request->all()))
             return response($this->validator->errors(), 403);
         $this->song->song_title = $request->input('song_title');
@@ -80,9 +84,7 @@ class Songs extends Controller
         $saved = $this->song->save();
 
         if($saved) {
-            $s3 = Storage::disk('s3');
-            $s3->put($songFileName, file_get_contents($song_file), 'public');
+            
         }
-        return response('Upload Complete!', 200);
     }
 }
