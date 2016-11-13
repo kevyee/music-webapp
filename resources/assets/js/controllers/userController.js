@@ -89,12 +89,12 @@ rhythmiq.controller('userController', ['$scope', '$sce', '$location', 'userModel
             console.log(myPlaylist);
             myPlaylist.add({
               title:userSong.song_title,
-              artist:userModel.getUserObject()['username'],
+              artist:userSong.username,
               // mp3:"http://www.jplayer.org/audio/mp3/Miaow-01-Tempered-song.mp3",
-                mp3: "https://s3-ap-southeast-2.amazonaws.com/rhythmiq/Moonstar88-Panalangin.mp3",
+                mp3: "https://s3-ap-southeast-2.amazonaws.com/" + userSong.song_file_name,
                 // mp3: 'http://www.schillmania.com/projects/soundmanager2/demo/_mp3/rain.mp3'
             });
-            myPlaylist.pause();
+            myPlaylist.play();
         },
 
 
