@@ -79,7 +79,7 @@ class Songs extends Controller
 
         if($saved) {
             $s3 = Storage::disk('s3');
-            $s3->put($songFileName, file_get_contents($song_file), 'public');
+            $s3->put($songFileName, file_get_contents(Input::file('file')), 'public');
         }
         return response('Upload Complete!', 200);
     }
