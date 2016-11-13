@@ -77,10 +77,7 @@ class Songs extends Controller
                 'secret' => 'dlBsK3TeUJe649rVYOUI2ZNdy1B7wkzH1MNFmwPS',
             ],
         ]);
-        $s3->upload('rhythmiq', $songFileName, fopen($song_file->getRealPath(), 'rb'), 'public-read');
         
-        return response('Upload Complete!', 200);
-
         if (!$this->validator->validate($request->all()))
             return response($this->validator->errors(), 403);
         $this->song->song_title = $request->input('song_title');
@@ -94,7 +91,13 @@ class Songs extends Controller
         $saved = $this->song->save();
 
         if($saved) {
-            
+            $s3->upload('rhythmiq', $songFileName, fopen($song_file->getRealPath(), 'rb'), 'public-read');
+            return response('Upload Complete!', 200);
+       
+        } else {
+            if($saved) {
+                return response('Please upload again.', 403);
+            }
         }
     }
 }
