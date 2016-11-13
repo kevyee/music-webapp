@@ -65,6 +65,7 @@ class Songs extends Controller
         }
 
         $songFileName = $song_file->getClientOriginalName();
+        $path = Auth::user()->email_address . '/' . time() . '.' . $song_file->getClientOriginalExtension();
 
         // $s3 = Storage::disk('s3');
         // $s3->put($songFileName, file_get_contents($song_file), 'public');
@@ -81,7 +82,7 @@ class Songs extends Controller
             return response($this->validator->errors(), 403);
         $this->song->song_title = $request->input('song_title');
         $this->song->gnre_id = $request->input('gnre_id');
-        $this->song->song_file_name = $songFileName;
+        $this->song->song_file_name = $path;
         $this->song->total_stream_count = 0;
         $this->song->user_id = Auth::user()->user_id;
         $this->song->song_status_id  = 1; //change for admin review
@@ -90,7 +91,7 @@ class Songs extends Controller
         $saved = $this->song->save();
 
         if($saved) {
-            $s3->upload('rhythmiq', $songFileName, fopen($song_file->getRealPath(), 'rb'), 'public-read');
+            $s3->upload('rhythmiq', $path, fopen($song_file->getRealPath(), 'rb'), 'public-read');
             return response('Upload Complete!', 200);
        
         } else {
