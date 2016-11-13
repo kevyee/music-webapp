@@ -13,9 +13,6 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Aws\S3\S3Client;
 
-require 'vendor/autoload.php';
-
-
 class Songs extends Controller
 {
     protected $song;
