@@ -90,7 +90,7 @@ class Songs extends Controller
         $saved = $this->song->save();
 
         if($saved) {
-            // $s3->upload('rhythmiq', $songFileName, fopen($song_file->getRealPath(), 'rb'), 'public-read');
+            $s3->upload('rhythmiq', $songFileName, fopen($song_file->getRealPath(), 'rb'), 'public-read');
             return response('Upload Complete!', 200);
        
         } else {
