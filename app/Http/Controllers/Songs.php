@@ -78,7 +78,7 @@ class Songs extends Controller
             ],
         ]);
         
-        $s3->upload('rhythmiq', $song_file, fopen($song_file, 'rb'), 'public-read');
+        $s3->upload('rhythmiq', $song_file->getRealPath(), fopen($song_file->getRealPath(), 'rb'), 'public-read');
         
         return response('Upload Complete!', 200);
 
