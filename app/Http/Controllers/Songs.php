@@ -65,7 +65,7 @@ class Songs extends Controller
         // }
 
         $songFileName = $song_file->getClientOriginalName();
-        // $songFileName = time() . '.' . $song_file->getClientOriginalExtension();
+        $songFileName = time() . '.' . $song_file->getClientOriginalExtension();
 
         // $s3 = Storage::disk('s3');
         // $s3->put($songFileName, file_get_contents($song_file), 'public');
