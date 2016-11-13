@@ -96,8 +96,8 @@ rhythmiq.controller('userController', ['$scope', '$sce', '$location', 'userModel
                 });
             }
             console.log(songs);
-            // myPlaylist.add(songs);
-            // myPlaylist.play(0);
+            myPlaylist.add(songs);
+            myPlaylist.play();
         },
 
 
