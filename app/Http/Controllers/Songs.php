@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Input;
 use App\KValidator;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Aws\S3\S3Client;
+
+require 'vendor/autoload.php';
 
 
 class Songs extends Controller
@@ -67,10 +70,21 @@ class Songs extends Controller
         $songFileName = $song_file->getClientOriginalName();
         $songFileName = time() . '.' . $song_file->getClientOriginalExtension();
 
-        $s3 = Storage::disk('s3');
-        $s3->put($songFileName, file_get_contents($song_file), 'public');
-        return response('Upload Complete!', 200);
+        // $s3 = Storage::disk('s3');
+        // $s3->put($songFileName, file_get_contents($song_file), 'public');
+        $s3 = new S3Client([
+            'version'     => 'latest',
+            'region'      => 'ap-southeast-2',
+            'credentials' => [
+                'key'    => 'AKIAIL6SAFIAFHEAWG4A',
+                'secret' => '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',
+            ],
+        ]);
         
+        $s3->upload('rhythmiq', $song_file, fopen($song_file, 'rb'), 'public-read');
+        
+        return response('Upload Complete!', 200);
+
         if (!$this->validator->validate($request->all()))
             return response($this->validator->errors(), 403);
         $this->song->song_title = $request->input('song_title');
