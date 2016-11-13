@@ -47,11 +47,11 @@ class Songs extends Controller
             return response($this->validator->errors(), 403);
         }
         
-        return response(Input::get('file'), 200);
 
         $song_file = Input::file('file');
         $file_limit = 5000;
         $songFileType = $song_file->getClientOriginalExtension();
+        return response($songFileType, 200);
 
         if (File::size($song_file) / 1000 > $file_limit) {
             $this->validator->addError('File size must not exceed 5MB.');
