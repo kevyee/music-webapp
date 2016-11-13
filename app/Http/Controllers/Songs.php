@@ -27,7 +27,7 @@ class Songs extends Controller
     public function getUserSongs() {
         if(Auth::check()) {
             $songs = \DB::table('song')
-                        ->select('song_id','gnre_name', 'song_title AS title','song_file_name')
+                        ->select('song_id','gnre_name', 'song_title','song_file_name', 'username', 'song.created', 'song.updated')
                         ->join('genre', 'song.gnre_id', '=', 'genre.gnre_id')
                         ->join('user', 'song.user_id', '=', 'user.user_id')
                         ->where('song.user_id', Auth::user()->user_id)
