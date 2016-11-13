@@ -86,13 +86,17 @@ rhythmiq.controller('userController', ['$scope', '$sce', '$location', 'userModel
         },
 
         playSong: function(userSongs, userSong) {
-            console.log(userSong);
-            myPlaylist.add({
-              title:userSongs.song_title,
-              artist:userSongs.username,
-              mp3: "https://s3-ap-southeast-2.amazonaws.com/rhythmiq/" + userSong.song_file_name,
-            });
-            myPlaylist.play();
+            var songs = [];
+            for(var i in userSongs) {    
+                var item = userSongs[i];   
+                songs.push({ 
+                    "firstName" : item.song_title,
+                    "lastName"  : item.username,
+                    "mp3"       : "https://s3-ap-southeast-2.amazonaws.com/rhythmiq/" + userSong.song_file_name
+                });
+            }
+            myPlaylist.add(songs);
+            myPlaylist.play(0);
         },
 
 
