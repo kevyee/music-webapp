@@ -10,6 +10,9 @@ $(document).ready(function(){
 
   $(document).on($.jPlayer.event.play, myPlaylist.cssSelector.jPlayer,  function(){
     $('.musicbar').addClass('animate');
+    // if(myPlaylist.status.currentTime>0) {
+      // alert('hello');
+    // }
   });
 
   $(document).on('click', '.jp-play-me', function(e){
