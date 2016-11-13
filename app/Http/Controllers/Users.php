@@ -78,8 +78,6 @@ class Users extends Controller
         $this->user->city_id = $request->input('city_id');
         $this->user->user_status_id = 'verified'; //temporary. add email check if time is with us
         $this->user->save();
-        $path = public_path().'//users/' . $this->user->email_address;
-        File::makeDirectory($path, $mode = 0777, true, true);
         return response('Registration was successful!', 200);
     }
 
