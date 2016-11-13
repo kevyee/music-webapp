@@ -10,6 +10,7 @@ rhythmiq.controller('userController', ['$scope', '$sce', '$location', 'userModel
     if($location.$$path == '/profile'){
         songModel.getUserSongs().then(function(response){
             $scope.userSongs = response.data;
+            $scope.index = 0;
             console.log($scope.userSongs);
         }).catch(function(response) {
         });
