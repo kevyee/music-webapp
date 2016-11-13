@@ -48,7 +48,7 @@ class Songs extends Controller
         }
         
         $song_file = Input::file('file');
-        return response($song_file, 200);
+        // return response($song_file, 200);
 
         $file_limit = 5000;
         $songFileType = $song_file->getClientOriginalExtension();
