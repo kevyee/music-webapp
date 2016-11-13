@@ -41,14 +41,14 @@ class Songs extends Controller
     }
 
     public function store(Request $request) {
-        return response(Input::get('file'), 200);
         
-        if(!Input::hasFile('file')){
+        if(is_null(Input::get('file'))){
             $this->validator->addError('Please include the song file.');
             return response($this->validator->errors(), 403);
         }
         
-
+        return response(Input::get('file'), 200);
+        
         $song_file = Input::file('file');
         $file_limit = 5000;
         $songFileType = $song_file->getClientOriginalExtension();
