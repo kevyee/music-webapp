@@ -111,7 +111,7 @@
                         </header>
                   <ul>
                       <li class="list-group-item clearfix" style = "margin-bottom:5px;height:60px" ng-repeat="userSong in userSongs">
-                        <a class="jp-play-me pull-right m-t-sm m-l text-md" ng-click="playSong(userSongs, index + 1)" style="cursor:pointer">
+                        <a class="jp-play-me pull-right m-t-sm m-l text-md" ng-click="playSong(userSongs, userSong)" style="cursor:pointer">
                           <i class="icon-control-play text"></i>
                           <i class="icon-control-pause text-active"></i>
                         </a>
@@ -121,7 +121,7 @@
                         <div class="clear" href="#">
                           
                           <span class="block text-ellipsis" style="text-transform:uppercase"> {{userSong.song_title}} </span>
-                          <div class="text-muted">by {{username}}</div> 
+                          <div class="text-muted">by {{userSong.username}}</div> 
                         </div>
 
                       </li>

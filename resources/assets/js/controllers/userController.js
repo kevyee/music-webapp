@@ -10,7 +10,6 @@ rhythmiq.controller('userController', ['$scope', '$sce', '$location', 'userModel
     if($location.$$path == '/profile'){
         songModel.getUserSongs().then(function(response){
             $scope.userSongs = response.data;
-            $scope.index = 0;
             console.log($scope.userSongs);
         }).catch(function(response) {
         });
@@ -86,8 +85,8 @@ rhythmiq.controller('userController', ['$scope', '$sce', '$location', 'userModel
             });
         },
 
-        playSong: function(userSongs, index) {
-            console.log(myPlaylist);
+        playSong: function(userSongs, userSong) {
+            console.log(userSong);
             myPlaylist.add({
               title:userSongs.song_title,
               artist:userSongs.username,
