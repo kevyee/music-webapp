@@ -67,16 +67,7 @@ class Songs extends Controller
         $songFileName = $song_file->getClientOriginalName();
         $path = Auth::user()->email_address . '/' . time() . '.' . $song_file->getClientOriginalExtension();
 
-        // $s3 = Storage::disk('s3');
-        // $s3->put($songFileName, file_get_contents($song_file), 'public');
-        $s3 = new S3Client([
-            'version'     => 'latest',
-            'region'      => 'ap-southeast-2',
-            'credentials' => [
-                'key'    => 'AKIAIL6SAFIAFHEAWG4A',
-                'secret' => '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',
-            ],
-        ]);
+        
         
         if (!$this->validator->validate($request->all()))
             return response($this->validator->errors(), 403);
@@ -91,6 +82,14 @@ class Songs extends Controller
         $saved = $this->song->save();
 
         if($saved) {
+            $s3 = new S3Client([
+                'version'     => 'latest',
+                'region'      => 'ap-southeast-2',
+                'credentials' => [
+                    'key'    => 'AKIAIL6SAFIAFHEAWG4A',
+                    'secret' => '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',
+                ],
+            ]);
             $s3->upload('rhythmiq', $path, fopen($song_file->getRealPath(), 'rb'), 'public-read');
             return response('Upload Complete!', 200);
        
