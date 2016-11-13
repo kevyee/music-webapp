@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Input;
 use App\KValidator;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
+
 
 class Songs extends Controller
 {
@@ -69,8 +71,7 @@ class Songs extends Controller
         $unique_id = uniqid();
         $path = public_path().'//users/' . Auth::user()->email_address . "/" . $unique_id;
         
-        File::makeDirectory($path, $mode = 0777, true, true);
-        $song_file->move($path, $songFileName);
+
         
         $this->song->song_title = $request->input('song_title');
         $this->song->gnre_id = $request->input('gnre_id');
