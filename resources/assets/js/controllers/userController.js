@@ -80,10 +80,11 @@ rhythmiq.controller('userController', ['$scope', '$sce', '$location', 'userModel
                     password: $scope.register.password
                 };
                 alert('Registration Successful! Click okay to login.');
-                userModel.doLogin(user).then(function(){
-                    $location.path('/home');
-                }).catch(function(response) {
-                });
+                $location.path('/login');
+                // userModel.doLogin(user).then(function(){
+                //     $location.path('/home');
+                // }).catch(function(response) {
+                // });
 
             }).catch(function(response) {
                 var error = '';

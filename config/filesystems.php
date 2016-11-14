@@ -56,10 +56,10 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key' => 'AKIAIL6SAFIAFHEAWG4A',
-            'secret' => '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',
-            'region' => 'ap-southeast-2',
-            'bucket' => 'rhythmiq',
+            'key' => '',
+            'secret' => '',
+            'region' => '',
+            'bucket' => '',
         ],
 
     ],
